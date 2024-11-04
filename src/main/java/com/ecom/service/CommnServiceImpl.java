@@ -1,0 +1,25 @@
+package com.ecom.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+@Service
+public class CommnServiceImpl implements CommonService {
+
+	@Override
+	public void removeSessionMessage() {
+
+//		RequestContextHolder.getRequestAttributes() fetches the current request attributes.
+//				The result is cast to ServletRequestAttributes, which has a getRequest() method that returns the HttpServletRequest object for the current request.
+		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.getRequestAttributes()))
+				.getRequest();
+		HttpSession session = request.getSession();
+		session.removeAttribute("succMsg");
+		session.removeAttribute("errorMsg");
+	}
+
+}
